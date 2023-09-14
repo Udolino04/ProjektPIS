@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AutoFixOnline</title>
+
+    <style>
+        div {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        #povijest_popravaka {
+            width: 175px;
+            height: 75px;
+            font-size: 17px;
+            font-weight: bold;
+            color: rgb(255, 0, 0);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        h1 {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+ 
+        form {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+        }
+
+
+        input[type="submit"] {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+            padding: 20;
+        }
+
+        ul li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+        }
+
+        #registracija_filter {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+        }
+
+
+        #povijest_popravaka {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: red; 
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .edit-button {
+            background-color: #fff;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            text-decoration: none;
+            color: #333;
+            margin-right: 10px;
+        }
+
+        .naslov {
+            margin-left: 30px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1><center>AutoFixOnline</center></h1>
+    <h2 class="naslov">Dodavanje Automobila</h2>
+    <form action="/dodaj_automobil" method="post">
+        Marka: <input type="text" name="marka"><br>
+        Model: <input type="text" name="model"><br>
+        Registracija: <input type="text" name="registracija"><br>
+        Kilometri: <input type="number" name="kilometri"><br>
+        Vlasnik: <input type="text" name="vlasnik"><br>
+        Godina Proizvodnje: <input type="number" name="godina_proizvodnje"><br>
+        <input type="submit" value="Dodaj Automobil">
+    </form>
+
+    <h2 class="naslov">Dodaj Popravak</h2>
+    <form method="POST" action="/dodaj_popravak">
+        Automobil:
+        <select name="automobil">
+            {% for automobil in automobili %}
+            <option value="{{ automobil.id }}">{{ automobil.marka }} - {{ automobil.model }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="registracija">Registracija automobila:</label>
+        <input type="text" id="registracija" name="registracija" required><br>
+        <label for="opis">Opis popravka:</label>
+        <textarea name="opis" id="opis" rows="4" required></textarea><br>
+        <label for="datum">Datum:</label>
+        <input type="date" name="datum" id="datum" required><br>
+        <input type="submit" value="Dodaj Popravak">
+    </form>
+
+    <h2 class="naslov">Popravci u Tijeku</h2>
+<ul>
+    {% for popravak in popravci_u_tijeku %}
+        <li>
+            Automobil: {{ popravak.automobil.marka }} - {{ popravak.automobil.model }} ({{ popravak.automobil.registracija }})<br>
+            Opis: {{ popravak.opis }}<br>
+            Datum: {{ popravak.datum }}<br>
+            <form action="/zavrsi_popravak/{{ popravak.id }}" method="post">
+                <input type="submit" value="Završi Popravak">
+                <form action="/izbrisi_popravak/{{ popravak.id }}" method="post" style="display: inline;">
+                    <input type="submit" value="Izbriši">
+                </form>
+                <a href="/uredi_popravak/{{ popravak.id }}" class="edit-button">Uredi</a>
+            </form>
+            <div style="margin-bottom: 20px;"></div>
+        </li>
+    {% endfor %}
+</ul>
+<form action="/obrisi_sve" method="post">
+    <input type="submit" value="Obriši Sve">
+</form>
+
+<div>
+    <form action="/povijest_popravaka" method="get">
+        <input type="submit" value="Povijest Popravaka" id="povijest_popravaka">
+    </form>
+</div>
+</body>
+</html>

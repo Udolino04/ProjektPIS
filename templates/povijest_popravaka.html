@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Povijest Popravaka - AutoFixOnline</title>
+
+    <style>
+
+        .back-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: blue;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        h1 {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+ 
+        form {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+
+        input[type="submit"] {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #registracija_filter {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+
+        #povijest_popravaka {
+            background-color: #ff0000;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .naslov {
+            margin-left: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1><center>AutoFixOnline</center></h1>
+    <h2 class="naslov">Povijest popravaka</h2>
+    <ul>
+        {% for popravak in povijest_popravaka %}
+            <li>
+                Automobil: {{ popravak.automobil.marka }} - {{ popravak.automobil.model }} ({{ popravak.automobil.registracija }})<br>
+                Opis: {{ popravak.opis }}<br>
+                Datum: {{ popravak.datum }}<br>
+                <div style="margin-bottom: 20px;"></div>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="/" class="back-button">Natrag na početnu</a>
+</body>
+</html>
